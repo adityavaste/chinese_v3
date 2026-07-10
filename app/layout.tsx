@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { RestaurantProvider } from '@/lib/context/restaurant-context'
-
+import { Toaster } from "sonner";
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -54,6 +54,12 @@ export default function RootLayout({
         <RestaurantProvider>
           {children}
         </RestaurantProvider>
+          <Toaster
+    position="top-right"
+    richColors
+    closeButton
+    duration={5000}
+  />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -1,6 +1,47 @@
+'use client';
 import { PageLayout } from '@/components/layout/page-layout';
-
+import { useRestaurant } from "@/lib/context/restaurant-context";
+import type { MenuItem, SpiceLevel, VegType } from "@/lib/types";
 export default function Home() {
+  const { addToCart } = useRestaurant();
+  const featuredDishes: MenuItem[] = [
+  {
+    id: "kung-pao-chicken",
+    name: "Kung Pao Chicken",
+    description: "Crispy chicken with peanuts",
+    price: 8.99,
+    image: "/images/kung-pao.jpg",
+    category: "Chicken",
+    spiceLevel: "medium",
+    vegType: "non_veg",
+    servings: 1,
+    preparationTime: 20,
+  },
+  {
+    id: "singapore-mei-fun",
+    name: "Singapore Mei Fun",
+    description: "Spiced rice noodles",
+    price: 8.99,
+    image: "/images/mei-fun.jpg",
+    category: "Noodles",
+    spiceLevel: "mild",
+    vegType: "non_veg",
+    servings: 1,
+    preparationTime: 15,
+  },
+  {
+    id: "mapo-tofu",
+    name: "Mapo Tofu",
+    description: "Silky tofu in spicy sauce",
+    price: 7.99,
+    image: "/images/mapo-tofu.jpg",
+    category: "Vegetarian",
+    spiceLevel: "hot",
+    vegType: "veg",
+    servings: 1,
+    preparationTime: 15,
+  },
+];
   return (
     <PageLayout>
       <div className="min-h-screen">
@@ -23,47 +64,46 @@ export default function Home() {
         </section>
 
         {/* Featured Section */}
-        <section className="py-16 px-4 bg-card">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-bold text-foreground mb-12 text-center">
-              Featured <span className="text-accent">Dishes</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  name: 'Kung Pao Chicken',
-                  desc: 'Crispy chicken with peanuts',
-                  price: '$8.99',
-                },
-                {
-                  name: 'Singapore Mei Fun',
-                  desc: 'Spiced rice noodles',
-                  price: '$8.99',
-                },
-                {
-                  name: 'Mapo Tofu',
-                  desc: 'Silky tofu in spicy sauce',
-                  price: '$7.99',
-                },
-              ].map((dish) => (
-                <div
-                  key={dish.name}
-                  className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-border"
-                >
-                  <div className="w-full h-48 bg-muted rounded-lg mb-4"></div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">{dish.name}</h3>
-                  <p className="text-muted-foreground mb-4">{dish.desc}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-primary font-bold text-lg">{dish.price}</span>
-                    <button className="bg-primary text-card px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                      Add
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+       {/* Featured Section */}
+<section className="py-16 px-4 bg-card">
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-4xl font-bold text-foreground mb-12 text-center">
+      Featured <span className="text-accent">Dishes</span>
+    </h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featuredDishes.map((dish) => (
+        <div
+          key={dish.id}
+          className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-border"
+        >
+          <div className="w-full h-48 bg-muted rounded-lg mb-4"></div>
+
+          <h3 className="text-xl font-semibold text-foreground mb-2">
+            {dish.name}
+          </h3>
+
+          <p className="text-muted-foreground mb-4">
+            {dish.description}
+          </p>
+
+          <div className="flex justify-between items-center">
+            <span className="text-primary font-bold text-lg">
+              ${dish.price.toFixed(2)}
+            </span>
+
+           <button
+  onClick={() => addToCart(dish, 1)}
+  className="bg-primary text-card px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+>
+  Add
+</button>
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
         {/* Categories Section */}
         <section className="py-16 px-4">
